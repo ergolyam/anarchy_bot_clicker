@@ -1,15 +1,22 @@
 import os
 
 class Config:
-    log_level: str = "INFO"
-    mode: str = 'None'
-    tg_id: str = '0'
-    tg_hash: str = '0'
+    log_level: str = "DEBUG"
+    mode: str = 'chasemute'
+    tg_id: str = ''
+    tg_hash: str = ''
     usermain: str = ''
     userchase: str = ''
     usernames: list = []
     bot_username: str = 'g_anarchy_bot'
     sessions_path: str = './'
+    clients_usernames: list = ['']
+    auto_mute_enabled: bool = True
+    auto_mute_aggressive: bool = True
+    auto_mute_aggressive_ignore: list = []
+    auto_mute_interval: str = '1m'
+    auto_mute_targets: list = []
+    auto_mute_target_chat: str = ''
 
     @classmethod
     def load_from_env(cls):
