@@ -1,4 +1,3 @@
-import asyncio
 from config.config import Config
 from pyrogram import Client, filters
 from pyrogram.handlers import MessageHandler, EditedMessageHandler
@@ -9,36 +8,49 @@ from modes.antimute import antimute_func
 from config import logging_config
 logging = logging_config.setup_logging(__name__)
 
-USER_SESSIONS = Config.usersmain or [Config.usernames[0]]
-
-async def handle_messages(client, message):
-    mode = Config.mode
-    if mode == 'chasemute':
-        if not Config.userchase:
-            logging.error('Env userchase is not set')
-            return
-        await chasemute_func(client, message)
-    elif mode == 'antimute':
-        if not Config.usernames:
-            logging.error('Env usernames is not set')
-            return
-        await antimute_func(client, message)
+def gen_sessions(mode: str):
+    if mode == 'chasemute' and Config.usersmain:
+        return Config.usersmain
+    elif mode == 'antimute' and Config.usernames:
+        return [Config.usernames[0]]
+    elif mode == 'mixed' and Config.usernames and Config.usersmain:
+        return [Config.usernames[0]] + Config.usersmain
     else:
-        logging.error('Env mode is not set')
         return
 
-def create_app(session_name: str) -> Client:
+def create_app(session_name: str, mode: str) -> Client:
     app = Client(
         name=f"{Config.sessions_path}/{session_name.strip(' ').strip('@')}",
         api_id=Config.tg_id,
         api_hash=Config.tg_hash
     )
-    app.add_handler(MessageHandler(handle_messages, filters.group))
-    app.add_handler(EditedMessageHandler(handle_messages, filters.group))
-    
+    if mode == 'chasemute' and Config.userchase:
+        logging.info(f'Apply {mode} handlers.')
+        logging.debug(f'Apply {session_name} as chasemute session.')
+        app.add_handler(MessageHandler(chasemute_func, filters.group))
+        app.add_handler(EditedMessageHandler(chasemute_func, filters.group))
+    elif mode == 'antimute' and Config.usernames:
+        logging.info(f'Apply {mode} handlers.')
+        logging.debug(f'Apply {session_name} as antimute session.')
+        app.add_handler(MessageHandler(antimute_func, filters.group))
+    elif Config.mode == "mixed":
+        logging.info(f'Apply {mode} handlers.')
+        if Config.usernames and session_name == Config.usernames[0]:
+            logging.debug(f'Apply {session_name} as antimute session.')
+            app.add_handler(MessageHandler(antimute_func, filters.group))
+        else:
+            logging.debug(f'Apply {session_name} as chasemute session.')
+            app.add_handler(MessageHandler(chasemute_func, filters.group))
+            app.add_handler(EditedMessageHandler(chasemute_func, filters.group))
+    else:
+        logging.error('Env is not set or config is incomplete.')
     return app
 
-clients = [create_app(sess) for sess in USER_SESSIONS]
+mode = Config.mode
+sessions = gen_sessions(mode)
+if not sessions:
+    raise ValueError(f'gen_sessions returned {sessions}. Stopped.')
+clients = [create_app(sess, mode) for sess in sessions]
 
 async def start_bot():
     logging.info("Launching all clients...")
