@@ -73,6 +73,7 @@ A clicker bot for automatically pressing inline buttons in Telegram bots.
     -e CLICK_USERS="@mainuser1, @mainuser2, @mainuser3" \
     -e CHASE_USER="@chaseuser" \
     ghcr.io/grisha765/anarchy_bot_clicker:latest
+    ```
 
    The bot listens for votes in Telegram groups and acts on behalf of the specified users to either mute or protect them during "mute votes" initiated by other bots (e.g., [anarchy_bot](https://github.com/gmankab/anarchy_bot)).
 
