@@ -10,6 +10,7 @@ class Config:
     protect_users: list = []
     bot_username: str = 'g_anarchy_bot'
     sessions_path: str = './'
+    automute: bool = False
 
     @classmethod
     def load_from_env(cls):
@@ -17,7 +18,9 @@ class Config:
             env_value = os.getenv(key.upper())
             if env_value is not None:
                 current_value = getattr(cls, key)
-                if isinstance(current_value, int):
+                if isinstance(current_value, bool):
+                    setattr(cls, key, bool(env_value))
+                elif isinstance(current_value, int):
                     setattr(cls, key, int(env_value))
                 elif isinstance(current_value, list):
                     setattr(cls, key, env_value.split(","))
