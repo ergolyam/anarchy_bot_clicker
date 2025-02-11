@@ -21,5 +21,5 @@ async def main():
         await stop_bot()
 
 if __name__ == '__main__':
-    if Config.tg_id != 0 or Config.usermain:
+    if Config.tg_id != 0:
         asyncio.run(main())
