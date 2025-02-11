@@ -40,8 +40,8 @@ async def chasemute_func(client, message):
                         callback_data = button.callback_data
                         buttons_callback_data.append(callback_data)
 
-            if Config.userchase in votes_for_mute:
-                logging.debug(f"User {Config.userchase} voted for mute")
+            if Config.chase_user in votes_for_mute:
+                logging.debug(f"User {Config.chase_user} voted for mute")
                 await client.request_callback_answer(
                     chat_id=message.chat.id,
                     message_id=message.id,
@@ -49,8 +49,8 @@ async def chasemute_func(client, message):
                 )
                 return
 
-            if Config.userchase in votes_against_mute:
-                logging.debug(f"User {Config.userchase} voted against mute")
+            if Config.chase_user in votes_against_mute:
+                logging.debug(f"User {Config.chase_user} voted against mute")
                 await client.request_callback_answer(
                     chat_id=message.chat.id,
                     message_id=message.id,

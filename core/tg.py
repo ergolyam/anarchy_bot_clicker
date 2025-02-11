@@ -9,12 +9,12 @@ from config import logging_config
 logging = logging_config.setup_logging(__name__)
 
 def gen_sessions(mode: str):
-    if mode == 'chasemute' and Config.usersmain:
-        return Config.usersmain
-    elif mode == 'antimute' and Config.usernames:
-        return [Config.usernames[0]]
-    elif mode == 'mixed' and Config.usernames and Config.usersmain:
-        return [Config.usernames[0]] + Config.usersmain
+    if mode == 'chasemute' and Config.click_users:
+        return Config.click_users
+    elif mode == 'antimute' and Config.protect_users:
+        return [Config.protect_users[0]]
+    elif mode == 'mixed' and Config.protect_users and Config.click_users:
+        return [Config.protect_users[0]] + Config.click_users
     else:
         return
 
@@ -24,18 +24,18 @@ def create_app(session_name: str, mode: str) -> Client:
         api_id=Config.tg_id,
         api_hash=Config.tg_hash
     )
-    if mode == 'chasemute' and Config.userchase:
+    if mode == 'chasemute' and Config.chase_user:
         logging.info(f'Apply {mode} handlers.')
         logging.debug(f'Apply {session_name} as chasemute session.')
         app.add_handler(MessageHandler(chasemute_func, filters.group))
         app.add_handler(EditedMessageHandler(chasemute_func, filters.group))
-    elif mode == 'antimute' and Config.usernames:
+    elif mode == 'antimute' and Config.protect_users:
         logging.info(f'Apply {mode} handlers.')
         logging.debug(f'Apply {session_name} as antimute session.')
         app.add_handler(MessageHandler(antimute_func, filters.group))
     elif Config.mode == "mixed":
         logging.info(f'Apply {mode} handlers.')
-        if Config.usernames and session_name == Config.usernames[0]:
+        if Config.protect_users and session_name == Config.protect_users[0]:
             logging.debug(f'Apply {session_name} as antimute session.')
             app.add_handler(MessageHandler(antimute_func, filters.group))
         else:

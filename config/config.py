@@ -5,9 +5,9 @@ class Config:
     mode: str = 'None'
     tg_id: str = '0'
     tg_hash: str = '0'
-    usersmain: list = []
-    userchase: str = ''
-    usernames: list = []
+    click_users: list = []
+    chase_user: str = ''
+    protect_users: list = []
     bot_username: str = 'g_anarchy_bot'
     sessions_path: str = './'
 

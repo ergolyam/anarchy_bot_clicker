@@ -25,7 +25,7 @@ async def antimute_func(client, message):
                         callback_data = button.callback_data
                         buttons_callback_data.append(callback_data)
 
-            if any(user.replace(" ", "") in mute_target for user in Config.usernames):
+            if any(user.replace(" ", "") in mute_target for user in Config.protect_users):
                 logging.debug(f"Target {mute_target} is in the allowed list for antimute.")
                 await client.request_callback_answer(
                     chat_id=message.chat.id,
