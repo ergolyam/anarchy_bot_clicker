@@ -5,7 +5,7 @@ class Config:
     mode: str = 'None'
     tg_id: str = '0'
     tg_hash: str = '0'
-    usermain: str = ''
+    usersmain: list = []
     userchase: str = ''
     usernames: list = []
     bot_username: str = 'g_anarchy_bot'
