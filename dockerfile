@@ -1,12 +1,12 @@
 FROM python:3.12-alpine
 
-RUN apk add --no-cache gcc musl-dev
+RUN apk add --no-cache gcc musl-dev uv
 
 WORKDIR /app
 
-COPY requirements.txt /app
+COPY pyproject.toml uv.lock /app
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN uv sync
 
 COPY . /app
 
@@ -14,5 +14,5 @@ ENV PYTHONUNBUFFERED=1
 
 ENV SESSIONS_PATH=/app/sessions
 
-CMD ["python", "main.py"]
+CMD ["uv", "run", "main.py"]
 
