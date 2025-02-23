@@ -6,9 +6,11 @@ WORKDIR /app
 
 COPY pyproject.toml uv.lock /app
 
-RUN uv sync
+RUN uv sync --no-cache
 
 COPY . /app
+
+ENV PYTHONDONTWRITEBYTECODE=1
 
 ENV PYTHONUNBUFFERED=1
 
