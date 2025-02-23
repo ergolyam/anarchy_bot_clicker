@@ -17,6 +17,8 @@ COPY --from=builder /app/.venv /app/.venv
 
 COPY . /app
 
+ENV PATH="/app/.venv/bin:$PATH"
+
 ENV PYTHONDONTWRITEBYTECODE=1
 
 ENV PYTHONUNBUFFERED=1
