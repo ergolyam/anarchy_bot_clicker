@@ -1,0 +1,14 @@
+[project]
+name = "anarchy-bot-clicker"
+version = "0.1.0"
+description = "clicker for automatically pressing inline buttons in telegram bots"
+readme = "readme.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pyrofork>=2.3.58",
+    "tgcrypto-pyrofork>=1.2.7",
+]
+
+[tool.pyright]
+venvPath = '.'
+venv = '.venv'
