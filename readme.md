@@ -7,7 +7,7 @@ A clicker bot for automatically pressing inline buttons in Telegram bots.
 
 - Run the bot:
     ```bash
-    python main.py
+    uv run main.py
     ```
 
 - Other working env's:
@@ -22,6 +22,7 @@ A clicker bot for automatically pressing inline buttons in Telegram bots.
     BOT_USERNAME="anarchy_bot_username"
     SESSIONS_PATH="/path/to/dir"
     ```
+
 - Pull container:
     ```bash
     podman pull ghcr.io/grisha765/anarchy_bot_clicker:latest
