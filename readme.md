@@ -25,7 +25,7 @@ A clicker bot for automatically pressing inline buttons in Telegram bots.
 
 - Pull container:
     ```bash
-    podman pull ghcr.io/grisha765/anarchy_bot_clicker:latest
+    podman pull ghcr.io/ergolyam/anarchy_bot_clicker:latest
     ```
 
 - Create dir:
@@ -44,7 +44,7 @@ A clicker bot for automatically pressing inline buttons in Telegram bots.
     -e TG_HASH="your_telegram_api_hash" \
     -e BOT_USERNAME="anarchy_bot_username" \
     -e PROTECT_USERS="@$BOT_USER, @user2, @user3" \
-    ghcr.io/grisha765/anarchy_bot_clicker:latest
+    ghcr.io/ergolyam/anarchy_bot_clicker:latest
     ```
 
 - Deploy in container as chasemute:
@@ -58,7 +58,7 @@ A clicker bot for automatically pressing inline buttons in Telegram bots.
     -e BOT_USERNAME="anarchy_bot_username" \
     -e CLICK_USERS="@mainuser1, @mainuser2, @mainuser3" \
     -e CHASE_USER="@chaseuser" \
-    ghcr.io/grisha765/anarchy_bot_clicker:latest
+    ghcr.io/ergolyam/anarchy_bot_clicker:latest
     ```
 
 - Deploy in container as mixed:
@@ -73,7 +73,7 @@ A clicker bot for automatically pressing inline buttons in Telegram bots.
     -e PROTECT_USERS="@user1, @user2, @user3" \
     -e CLICK_USERS="@mainuser1, @mainuser2, @mainuser3" \
     -e CHASE_USER="@chaseuser" \
-    ghcr.io/grisha765/anarchy_bot_clicker:latest
+    ghcr.io/ergolyam/anarchy_bot_clicker:latest
     ```
 
    The bot listens for votes in Telegram groups and acts on behalf of the specified users to either mute or protect them during "mute votes" initiated by other bots (e.g., [anarchy_bot](https://github.com/gmankab/anarchy_bot)).
